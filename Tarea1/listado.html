@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Listado de Avisos de Adopción</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+<header>
+    <h1>Sistema de Adopción de Mascotas</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html">Portada</a></li>
+            <li><a href="agregar.html">Agregar aviso de adopción</a></li>
+            <li><a href="listado.html">Ver listado de adopciones</a></li>
+            <li><a href="estadisticas.html">Estadísticas</a></li>
+        </ul>
+    </nav>
+</header>
+<main>
+    <h2>Listado de Avisos de Adopción</h2>
+
+
+    <div id="listado">
+        <table id="tablaListado">
+            <thead>
+                <tr>
+                    <th>Fecha Publicación</th>
+                    <th>Fecha Entrega</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Cantidad, Tipo y Edad</th>
+                    <th>Nombre Contacto</th>
+                    <th>Contacto</th>
+                    <th>Total Fotos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-id="1">
+                    <td>2024-06-01</td>
+                    <td>2024-06-05</td>
+                    <td>Santiago</td>
+                    <td>Beauchef</td>
+                    <td>1 perro, 3 años</td>
+                    <td>Juan Pérez</td>
+                    <td>WhatsApp: +56912345678</td>
+                    <td>1</td>
+                </tr>
+                <tr data-id="2">
+                    <td>2024-05-28</td>
+                    <td>2024-06-01</td>
+                    <td>Providencia</td>
+                    <td>Los Leones</td>
+                    <td>2 gatos, 8 semanas</td>
+                    <td>Ana Soto</td>
+                    <td>Instagram: @anasoto</td>
+                    <td>1</td>
+                </tr>
+                <tr data-id="3">
+                    <td>2024-05-25</td>
+                    <td>2024-05-30</td>
+                    <td>Ñuñoa</td>
+                    <td>Irarrázaval</td>
+                    <td>2 perros, 1 año</td>
+                    <td>Carlos Díaz</td>
+                    <td>Telegram: @carlosd</td>
+                    <td>1</td>
+                </tr>
+                <tr data-id="4">
+                    <td>2024-05-20</td>
+                    <td>2024-05-25</td>
+                    <td>San Miguel</td>
+                    <td>El Llano</td>
+                    <td>1 perro, 2 gatos</td>
+                    <td>María Torres</td>
+                    <td>X: @mariatorres</td>
+                    <td>3</td>
+                </tr>
+                <tr data-id="5">
+                    <td>2024-05-15</td>
+                    <td>2024-05-20</td>
+                    <td>Puente Alto</td>
+                    <td>Santa Rosa</td>
+                    <td>2 perros, 3 años y 2 años</td>
+                    <td>Pedro Morales</td>
+                    <td>WhatsApp: +56987654321</td>
+                    <td>2</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div id="detalle" style="display:none;">
+        <h3>Detalle del Aviso</h3>
+        <div id="detalleContenido"></div>
+        <button id="btnVolverListado">Volver al listado</button>
+        <button id="btnVolverPortada">Volver a la portada</button>
+    </div>
+</main>
+
+<script src="js/listado.js"></script>
+</html>
