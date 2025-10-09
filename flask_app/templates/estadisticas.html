@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Estadísticas de Adopciones</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Adopción de Mascotas</h1>
+        <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Portada</a></li>
+            <li><a href="{{ url_for('agregar_aviso') }}">Agregar aviso de adopción</a></li>
+            <li><a href="{{ url_for('listado') }}">Ver listado de adopciones</a></li>
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+        </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Estadísticas de Adopciones</h2>
+
+        <h3>Cantidad de avisos por dia</h3>
+        <img src="{{ url_for('static', filename='svg/grafico_lineas.png') }}" width="600">
+
+        <h3>Total de avisos por tipo de mascota</h3>
+        <img src="{{ url_for('static', filename='svg/grafico_torta.png') }}" width="400">
+
+        <h3>Cantidad de avisos por mes y tipo de mascota</h3>
+        <img src="{{ url_for('static', filename='svg/grafico_barras.png') }}" width="600">
+
+        <br><br>
+        <a href="{{ url_for('index') }}" class="btn">Volver a la portada</a>
+    </main>
+</body>
+</html>
