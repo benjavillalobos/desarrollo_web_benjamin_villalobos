@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+	<title>Adopciones de Mascotas</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Adopción de Mascotas</h1>
+        <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Portada</a></li>
+            <li><a href="{{ url_for('agregar_aviso') }}">Agregar aviso de adopción</a></li>
+            <li><a href="{{ url_for('listado') }}">Ver listado de adopciones</a></li>
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+        </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Bienvenido!</h2>
+        <p>En este sitio web, puedes encontrar y publicar avisos de adopción de mascotas. Navega a través de las diferentes secciones para ver los listados disponibles, agregar nuevos avisos o consultar estadísticas sobre las adopciones.</p>
+        <h3>Últimos 5 avisos publicados</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha de publicacion</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Cantidad, tipo y edad</th>
+                    <th>Foto</th>
+                </tr>
+             </thead>
+            
+            <tbody>
+                <!-- Mostrar los últimos 5 avisos -->
+                {% for aviso in avisos %}
+                    <tr>
+                        <td>{{ aviso.fecha_ingreso.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ aviso.comuna.nombre }}</td>
+                        <td>{{ aviso.sector }}</td>
+                        <td>{{ aviso.cantidad }} {{ aviso.tipo }}, {{ aviso.edad }}{% if aviso.unidad_medida == 'a' %} años{% else %} meses{% endif %}</td>
+                        <td>
+                            {% if aviso.fotos %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ aviso.fotos[0].nombre_archivo) }}" width="200" alt="foto mascota en adopcion">
+                            {% else %}
+                                <em>Sin foto</em>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr><td colspan="5">No hay avisos aún.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Listado de Avisos de Adopción</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Adopción de Mascotas</h1>
+        <nav>
+        <ul>
+            <li><a href="{{ url_for('index') }}">Portada</a></li>
+            <li><a href="{{ url_for('agregar_aviso') }}">Agregar aviso de adopción</a></li>
+            <li><a href="{{ url_for('listado') }}">Ver listado de adopciones</a></li>
+            <li><a href="{{ url_for('estadisticas') }}">Estadísticas</a></li>
+        </ul>
+        </nav>
+    </header>
+    <main>
+    <h2>Listado de Avisos de Adopción</h2>
+
+    <!-- Tabla de avisos -->
+    <div id="listado">
+        <table id="tablaListado">
+            <thead>
+                <tr>
+                    <th>Fecha Publicación</th>
+                    <th>Fecha Entrega</th>
+                    <th>Comuna</th>
+                    <th>Sector</th>
+                    <th>Cantidad, Tipo y Edad</th>
+                    <th>Nombre Contacto</th>
+                    <th>Contacto</th>
+                    <th>Total Fotos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for aviso in avisos %}
+                <tr data-id="{{ aviso.id }}"
+                    data-fecha_pub="{{ aviso.fecha_ingreso.strftime('%Y-%m-%d') }}"
+                    data-fecha_ent="{{ aviso.fecha_entrega.strftime('%Y-%m-%d') }}"
+                    data-comuna="{{ aviso.comuna.nombre }}"
+                    data-sector="{{ aviso.sector or '-' }}"
+                    data-cant_tipo="{{ aviso.cantidad }} {{ aviso.tipo }}, {{ aviso.edad }}{% if aviso.unidad_medida == 'a' %} años{% else %} meses{% endif %}"
+                    data-nombre="{{ aviso.nombre }}"
+                    data-contactos="{% for c in aviso.contactos %}{{ c.nombre }}: {{ c.identificador }}{% if not loop.last %}, {% endif %}{% endfor %}"
+                    data-fotos="{{ aviso.fotos | map(attribute='nombre_archivo') | join(',') }}">
+                    <td>{{ aviso.fecha_ingreso.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ aviso.fecha_entrega.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ aviso.comuna.nombre }}</td>
+                    <td>{{ aviso.sector or '-' }}</td>
+                    <td>{{ aviso.cantidad }} {{ aviso.tipo }}, {{ aviso.edad }}{% if aviso.unidad_medida == 'a' %} años{% else %} meses{% endif %}</td>
+                    <td>{{ aviso.nombre }}</td>
+                    <td>
+                        {% if aviso.contactos %}
+                            {% for c in aviso.contactos %}
+                                {{ c.nombre }}: {{ c.identificador }}{% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <em>Sin contacto</em>
+                        {% endif %}
+                    </td>
+                    <td>{{ aviso.fotos|length }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="8"><em>No hay avisos disponibles.</em></td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="pagination">
+        {% if prev_page %}
+            <a class="btn" href="{{ url_for('listado', page=prev_page) }}">← Anterior</a>
+        {% endif %}
+
+        <span>Página {{ page }}</span>
+
+        {% if next_page %}
+            <a class="btn" href="{{ url_for('listado', page=next_page) }}">Siguiente →</a>
+        {% endif %}
+        </div>
+    </div>
+
+    <!-- Panel de detalle -->
+    <div id="detalle" style="display:none;">
+        <h3>Detalle del Aviso</h3>
+        <div id="detalleContenido"></div>
+        <h4>Comentarios</h4>
+        <div id="comentariosContainer">
+            <p><em>No hay comentarios todavía.</em></p>
+        </div>
+
+        <form id="formComentario">
+            <input type="hidden" name="aviso_id" id="comentarioAvisoId">
+            <label for="comentarioNombre">Nombre:</label>
+            <input type="text" id="comentarioNombre" name="nombre" required minlength="3" maxlength="80">
+
+            <label for="comentarioTexto">Comentario:</label>
+            <textarea id="comentarioTexto" name="texto" rows="3" maxlength="300" required></textarea>
+
+            <button type="button" id="btnEnviarComentario">Enviar comentario</button>
+
+        </form>
+
+        <p id="mensajeComentario" hidden></p>
+
+        <button id="btnVolverListado">Volver al listado</button>
+        <button id="btnVolverPortada">Volver a la portada</button>
+    </div>
+</main>
+
+<script src="{{ url_for('static', filename='js/listado.js') }}"></script>
+
+
+</body>
+</html>
