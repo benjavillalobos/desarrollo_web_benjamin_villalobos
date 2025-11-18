@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listado de Avisos</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Adopción de Mascotas</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/listado}">Ver listado de adopciones</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+    <h2>Listado de Avisos de Adopción</h2>
+
+    <!-- Tabla de avisos -->
+    <div id="listado">
+        <table id="tablaListado">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha Publicación</th>
+                    <th>Sector</th>
+                    <th>Cantidad, Tipo y Edad</th>
+                    <th>Comuna</th>
+                    <th>Nota</th>
+                    <th>Evaluar</th>
+                </tr>
+            </thead>
+            <tbody>
+               <tr th:each="aviso : ${avisos}">
+                    
+                    <td th:text="${aviso.id}"></td>
+                    <td th:text="${#temporals.format(aviso.fechaPublicacion, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${aviso.sector}"></td>
+                    <td th:text="|${aviso.cantidad} ${aviso.tipo}, ${aviso.edad}|"></td>></td>
+                    <!-- Falta agregar arriba la unidad de medida de la edad, modificar el dto y el avisoadopcion.java-->
+                    <td th:text="${aviso.comuna}"></td>
+                    <!-- celda de nota muestra el promedio o '-' si es null -->
+                    <td class="col-nota"
+                        th:attr="data-aviso-id=${aviso.id}"
+                        th:text="${aviso.promedioNota != null ? #numbers.formatDecimal(aviso.promedioNota, 1, 1) : '-'}">
+                        -
+                    </td>
+                    <!-- Botón Evaluar: JS usa data-aviso-id -->
+                    <td>
+                        <button type="button" class="btn-evaluar" th:attr="data-aviso-id=${aviso.id}">Evaluar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+
+    <!-- para evaluar -->
+    <div id="panelEvaluar" style="display:none; margin-top: 20px;">
+        <h3>Evaluar aviso</h3>
+        <p>Estás evaluando el aviso ID <span id="evalAvisoId"></span></p>
+
+        <label for="notaInput">Nota (1 a 7):</label>
+        <input type="number" id="notaInput" min="1" max="7">
+
+        <button type="button" id="btnEnviarNota">Enviar nota</button>
+        <button type="button" id="btnCancelarNota">Cancelar</button>
+
+        <p id="mensajeNota" hidden></p>
+    </div>
+</main>
+
+<script th:src="@{/notas.js}"></script>
+
+
+</body>
+</html>
